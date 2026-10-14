@@ -3,25 +3,29 @@
 namespace Database\Factories;
 
 use App\Models\Flight;
-use App\Models\Travel;
 use App\Models\User;
+use App\Models\Travel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Travel>
- */
 class TravelFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Travel::class;
+
     public function definition(): array
     {
+        do {
+            $userId = User::inRandomOrder()->first()->id;
+            $flightId = Flight::inRandomOrder()->first()->id;
+
+            // Ellenőrizzük, hogy ez a kombináció létezik-e már
+            $exists = Travel::where('user_id', $userId)
+                ->where('flight_id', $flightId)
+                ->exists();
+        } while ($exists); // Addig ismétli, amíg egyedi párt nem talál
+
         return [
-            'flight_id' => Flight::all()->random()->id,
-            'user_id' => User::all()->random()->id,
+            'flight_id' => $flightId,
+            'user_id' => $userId,
             'evaluation' => fake()->sentence(),
         ];
     }

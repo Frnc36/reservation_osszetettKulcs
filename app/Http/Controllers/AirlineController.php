@@ -61,6 +61,6 @@ class AirlineController extends Controller
      */
     public function destroy(Airline $airline)
     {
-        $airline->delete();
+        return Airline::destroy($airline->id);
     }
 }

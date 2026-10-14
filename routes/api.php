@@ -8,5 +8,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('airlines/{airline}',[AirlineController::class,'show']);
-Route::get('airlines/{airline}',[AirlineController::class,'destroy']);
+Route::get('/airlines/{airline}',[AirlineController::class,'show']);
+Route::delete('/airlines/{airline}',[AirlineController::class,'destroy']);
